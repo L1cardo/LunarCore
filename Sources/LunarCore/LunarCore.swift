@@ -535,7 +535,7 @@ public class LunarCore {
     ///   - month: 月
     ///   - day: 日
     /// - Returns: 节日
-    private static func getWeekFestival(_ year: Int, _ month: Int, _ day: Int) -> String? {
+    private static func getWeekFestival(_ year: Int, _ month: Int, _ day: Int) -> String {
         let date = newDate(year, month, day)
         let gregorian = Calendar(identifier: .gregorian)
         let comps = gregorian.dateComponents([.weekday], from: date)
@@ -556,7 +556,7 @@ public class LunarCore {
         if festival != nil {
             return i18n(festival)
         }
-        return nil
+        return ""
     }
     
     /// 判断农历年闰月数
@@ -580,7 +580,7 @@ public class LunarCore {
     /// 获取农历年份一年的每月的天数及一年的总天数
     /// - Parameter year: 农历
     /// - Returns: 总天数
-    private static func getLunarYearDays(_ year: Int) -> [String: Any?] {
+    private static func getLunarYearDays(_ year: Int) -> [String: Any] {
         let yearData = lunarInfo[year - minYear]
         let leapMonth = yearData[0] // 闰月
         let monthData = yearData[3]
@@ -701,7 +701,7 @@ public class LunarCore {
     /// 获得生肖
     /// - Parameter year: 年
     /// - Returns: 生肖
-    private static func getYearZodiac(_ year: Int) -> String? {
+    private static func getYearZodiac(_ year: Int) -> String {
         let num = year - 1890 + 25 // 参考干支纪年的计算，生肖对应地支
         return i18n(lunarCalendarData["zodiac"]?[num % 12])
     }
@@ -798,7 +798,7 @@ public class LunarCore {
     ///   - _month: 公历月
     ///   - _day: 公历日
     /// - Returns: 农历年月日
-    public static func solarToLunar(_ _year: Int, _ _month: Int, _ _day: Int) -> [String: Any?] {
+    public static func solarToLunar(_ _year: Int, _ _month: Int, _ _day: Int) -> [String: Any] {
         let inputDate = formatDate(_year, _month, _day)
         
         if inputDate["error"] != nil {
@@ -811,7 +811,7 @@ public class LunarCore {
         memoryCache.current = year
         
         // 二十四节气
-        var termList = [String: Any]()
+        var termList: [String: Any]
         let termListCache = memoryCache.get(key: "termList")
         if termListCache != nil {
             termList = termListCache as! [String: Any]
@@ -829,7 +829,7 @@ public class LunarCore {
         let lunarDate2 = Int(lunarDate[2])
         
         let lunarLeapMonth = getLunarLeapYear(lunarDate0)
-        var lunarMonthName = String()
+        var lunarMonthName = ""
         
         if lunarLeapMonth > 0, lunarLeapMonth == lunarDate1 {
             let mStr = i18n(lunarCalendarData["monthCn"]?[lunarDate1 - 1])
@@ -876,7 +876,7 @@ public class LunarCore {
             "worktime": workTime,
             "GanZhiYear": getLunarYearName(GanZhiYear, 0),
             "zodiac": getYearZodiac(GanZhiYear),
-            "term": termList[formatDay(month, day)]
+            "term": termList[formatDay(month, day)] ?? ""
         ]
     }
     
@@ -973,7 +973,7 @@ public class LunarCore {
     ///   - month: 月（0-12，有闰月)
     ///   - day: 日
     /// - Returns: 天数
-    public static func getDaysBetweenZheng(_ year: Int, _ month: Int, _ day: Int) -> Int {
+    private static func getDaysBetweenZheng(_ year: Int, _ month: Int, _ day: Int) -> Int {
         let lunarYearDays = getLunarYearDays(year)
         let monthDays = lunarYearDays["monthDays"] as! [Int]
         var days = 0
@@ -993,7 +993,7 @@ public class LunarCore {
     ///   - month: 月(1-13，有闰月)
     ///   - day: 日
     /// - Returns: 公历数据
-    public static func lunarToSolar(_ _year: Int, _ _month: Int, _ _day: Int) -> [String: Any?] {
+    public static func lunarToSolar(_ _year: Int, _ _month: Int, _ _day: Int) -> [String: Any] {
         let inputDate = formatDate(_year, _month, _day)
         
         if inputDate["error"] != nil {
@@ -1015,9 +1015,9 @@ public class LunarCore {
         let components = gregorian.dateComponents([.year, .month, .day], from: offDate)
         
         return [
-            "year": components.year,
-            "month": components.month,
-            "day": components.day
+            "year": components.year!,
+            "month": components.month!,
+            "day": components.day!
         ]
     }
 }
