@@ -5,7 +5,7 @@
 //  Created by Licardo on 2020/7/1.
 //
 
-import Cocoa
+import Foundation
 
 /**
  *  缓存 主要是缓存节气信息
