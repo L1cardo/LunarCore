@@ -51,6 +51,7 @@ LunarCore.calendar(_ year: Int, _ month: Int) -> [String: Any]
             "year": 2020, 
             "lunarFestival": "",
             "day": 28,
+            "term": ""
         ],
         ......
 ]
