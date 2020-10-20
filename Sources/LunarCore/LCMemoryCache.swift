@@ -20,7 +20,7 @@ struct LCMemoryCache {
     var cache: [String: Any?]
     
     init() {
-        cache = [String: Any?]()
+        cache = [:]
     }
     
     public func get(key: String) -> Any? {

@@ -65,7 +65,7 @@ public class LunarCore {
     
     // 农历数据
     private static var lunarCalendarData: [String: [String]] {
-        var dict = [String: [String]]()
+        var dict: [String: [String]] = [:]
         // 天干
         dict["heavenlyStems"] = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"]
         // 地支
@@ -83,7 +83,7 @@ public class LunarCore {
     
     // 中国节日放假安排，外部设置，0无特殊安排，1工作，2放假
     private static var worktime: [String: [String: Int]] {
-        var dicts = [String: [String: Int]]()
+        var dicts: [String: [String: Int]] = [:]
         dicts["y2020"] = ["d0101": 2, "d0119": 1, "d0124": 2, "d0125": 2, "d0126": 2, "d0127": 2, "d0128": 2, "d0129": 2, "d0130": 2, "d0201": 1, "d0404": 2, "d0405": 2, "d0406": 2, "d0426": 1, "d0501": 2, "d0502": 2, "d0503": 2, "d0504": 2, "d0505": 2, "d0509": 1, "d0625": 2, "d0626": 2, "d0627": 2, "d0628": 1, "d0927": 1, "d1001": 2, "d1002": 2, "d1003": 2, "d1004": 2, "d1005": 2, "d1006": 2, "d1007": 2, "d1008": 2, "d1010": 1]
         dicts["y2021"] = ["d0101": 2, "d0102": 2, "d0103": 2, "d0207": 1, "d0212": 2, "d0213": 2, "d0214": 2, "d0215": 2, "d0216": 2, "d0217": 2, "d0218": 2, "d0220": 1, "d0403": 2, "d0404": 2, "d0405": 2, "d0501": 2, "d0502": 2,  "d0503": 2, "d0612": 2, "d0613": 2, "d0614": 2, "d0918": 1, "d0919": 2, "d0920": 2, "d0921": 2, "d0926": 1, "d1001": 2, "d1002": 2, "d1003": 2, "d1004": 2, "d1005": 2, "d1006": 2, "d1007": 2, "d1009": 1]
         return dicts
@@ -479,7 +479,7 @@ public class LunarCore {
     ///   - start: 开始日期
     /// - Returns: 整月日历
     private static func createMonthData(_ year: Int, _ month: Int, _ len: Int, _ start: Int) -> [[String: Int]] {
-        var monthData = [[String: Int]]()
+        var monthData: [[String: Int]] = []
         
         if len < 1 { return monthData }
         
@@ -557,7 +557,7 @@ public class LunarCore {
     }
     
     private static func toString(_ num: Int?) -> [Any?] {
-        var arr = [Any?]()
+        var arr: [Any?] = []
         var tempNum = num
         while tempNum != 0 {
             arr.append(String(tempNum! & 1))
@@ -582,7 +582,7 @@ public class LunarCore {
         
         let len = (leapMonth != 0) ? 13 : 12 // 该年有几个月
         var yearDays = 0
-        var monthDays = [Int]()
+        var monthDays: [Int] = []
         
         for i in 0..<len {
             if let num = (monthDataArr[i] as? String), num == "0" {
@@ -676,7 +676,7 @@ public class LunarCore {
     /// - Parameter year: 年
     /// - Returns: 节气名
     private static func getYearTerm(_ year: Int) -> [String: String] {
-        var res = [String: String]()
+        var res: [String: String] = [:]
         let keys = solarTerms[year]
         let values = lunarCalendarData["solarTerm"]!
         if let keys = keys {
